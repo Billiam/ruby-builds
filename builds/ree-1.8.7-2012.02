@@ -1,0 +1,13 @@
+build_package_patched() {
+  # These three patches are included when RVM builds REE
+  cd source
+  wget 'https://github.com/wayneeseguin/rvm/raw/master/patches/ree/1.8.7/tcmalloc.patch'
+  wget 'https://github.com/wayneeseguin/rvm/raw/master/patches/ree/1.8.7/stdout-rouge-fix.patch'
+  patch -p1 < tcmalloc.patch
+  patch -p1 < stdout-rouge-fix.patch
+  # patch -p1 < no_sslv2.diff
+  cd ..
+}
+
+require_gcc
+install_package "ruby-enterprise-1.8.7-2012.02" "http://rubyenterpriseedition.googlecode.com/files/ruby-enterprise-1.8.7-2012.02.tar.gz" patched ree_installer
